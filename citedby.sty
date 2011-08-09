@@ -1,25 +1,34 @@
 \ProvidesPackage{citedby}
 %Print bibliography of author's papers with the lists of citing papers
 %Based on the idea of Ing. Richard Balogh  
+%Code by Audrey - http://tex.stackexchange.com/users/4483/audrey
 \RequirePackage{kvoptions}
-\DeclareStringOption[own]{filter}
+
+%We have some package options
+% filter is used to distinguish author's records
+\DeclareStringOption[own]{filter} 
+% label is used as heading above list of citing publications  
 \DeclareStringOption[Cited by:]{label}
 \ProcessKeyvalOptions*
 
 \defbibfilter{own}{keyword=\citedby@filter}
 
+% This is needed for correct numbering of records in bibliography
 \ExecuteBibliographyOptions{defernumbers=true}
 
+% \itemfullcite prints each citing document
 \newrobustcmd*{\itemfullcite}[1]{%
-  \item \fullcite{#1}\finentry}
+  \item \fullcite{#1}\finentry} %\finentry is needed for correct spacing and punctation
 
 \renewbibmacro*{finentry}{%
   \finentry
   \ifbibliography
-    {\iffieldundef{usera}
+    % usera is field in bib file, there must be a comma separated list
+    % of citing documents
+    {\iffieldundef{usera}  
       {}
-      {\vskip\bibitemsep\citedby@label
+      {\vskip\bibitemsep\citedby@label  
        \begin{enumerate}
-         \forcsvfield{\itemfullcite}{usera}
+         \forcsvfield{\itemfullcite}{usera} % loop for printing individual citing documents
        \end{enumerate}}}
     {}}

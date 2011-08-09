@@ -1,0 +1,25 @@
+\ProvidesPackage{citedby}
+%Print bibliography of author's papers with the lists of citing papers
+%Based on the idea of Ing. Richard Balogh  
+\RequirePackage{kvoptions}
+\DeclareStringOption[own]{filter}
+\DeclareStringOption[Cited by:]{label}
+\ProcessKeyvalOptions*
+
+\defbibfilter{own}{keyword=\citedby@filter}
+
+\ExecuteBibliographyOptions{defernumbers=true}
+
+\newrobustcmd*{\itemfullcite}[1]{%
+  \item \fullcite{#1}\finentry}
+
+\renewbibmacro*{finentry}{%
+  \finentry
+  \ifbibliography
+    {\iffieldundef{usera}
+      {}
+      {\vskip\bibitemsep\citedby@label
+       \begin{enumerate}
+         \forcsvfield{\itemfullcite}{usera}
+       \end{enumerate}}}
+    {}}

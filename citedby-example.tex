@@ -1,0 +1,11 @@
+\documentclass{article}
+\usepackage[style=numeric ]{biblatex}
+\usepackage[label={Citov\'ano v:}]{citedby}
+\usepackage{lmodern}
+
+\addbibresource{\jobname.bib}
+\begin{document}
+\nocite{*}
+\printbibliography[filter=own]
+\end{document}
+

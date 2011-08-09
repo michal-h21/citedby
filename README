@@ -1,0 +1,59 @@
+Package citedby
+
+This is small package for printing bibliographies with citing works using biblatex.
+
+Example: 
+1.  Author, Article 1,Journal.
+    Cited by
+      Another author, Article
+      Another author 2, Article bla bla
+2.  Author, Article 2, Journal
+    Cited by
+      Another author 3,...
+      
+Usage:
+
+\documentclass{article}
+\usepackage[usual options]{biblatex}
+\usepackage{citedby}
+\addbibresource{bibtex file.bib}
+\begin{document}
+\nocite{*}
+\printcitedby
+\end{document}
+
+Linking of athor's records with citing records is done in the bibtex file:
+
+@article{Sh:1,
+author = {Shelah, Saharon},
+ams-subject = {(02.50)},
+journal = {Israel Journal of Mathematics},
+review = {MR 40-7102},
+pages = {187--202},
+title = {Stable theories},
+volume = {7},
+year = {1969},
+keywords={own},
+usera={Sh:4, Sh:5, Sh:6}
+},
+
+@article{Sh:4,
+author = {Shelah, Saharon},
+ams-subject = {(02.50)},
+journal = {Journal of Symbolic Logic},
+review = {MR 44-52},
+pages = {73--82},
+title = {On theories $T$ categorical in $|T|$},
+volume = {35},
+year = {1970},
+},
+
+....
+
+Author's records must have set its 'keywords' field to 'own', and in field 'usera', 
+there is a list of citing publication's citekeys.  
+
+Package options:
+
+filter - default 'own'
+label - default 'Cited by:'

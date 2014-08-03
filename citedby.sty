@@ -11,6 +11,7 @@
 \DeclareStringOption[own]{filter} 
 % label is used as heading above list of citing publications  
 \DeclareStringOption[Cited by:]{label}
+\DeclareStringOption[usera]{citefield}
 \ProcessKeyvalOptions*
 
 \defbibfilter{own}{keyword=\citedby@filter}
@@ -27,11 +28,12 @@
   \ifbibliography{%
     % usera is field in bib file, there must be a comma separated list
     % of citing documents
-    \iffieldundef{usera}  
+    %\iffieldundef{usera}  
+    \iffieldundef{\citedby@citefield}  
       {}
       {\vskip\bibitemsep\citedby@label  
        \begin{enumerate}
-         \forcsvfield{\itemfullcite}{usera} % loop for printing individual citing documents
+         \forcsvfield{\itemfullcite}{\citedby@citefield} % loop for printing individual citing documents
        \end{enumerate}}}
     {}}
     
